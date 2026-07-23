@@ -1,6 +1,21 @@
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/reducers/AuthSlice";
+import type { RootState } from "../redux/store";
+import { useNavigate } from "react-router";
 
 function Bw5Navbar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector(
+    (rs: RootState) => rs.auth.isAuthenticated,
+  );
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
     <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="shadow-sm">
       <Container>
@@ -20,8 +35,13 @@ function Bw5Navbar() {
               </NavDropdown.Item>
               <NavDropdown.Item href="#email">Comunicazioni</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#logout" className="text-danger">
-                Logout
+              <NavDropdown.Item
+                className={isAuthenticated ? "text-danger" : "text-warning"}
+                onClick={() =>
+                  isAuthenticated ? handleLogout() : navigate("/login")
+                }
+              >
+                {isAuthenticated ? "Logout" : "Login"}
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
