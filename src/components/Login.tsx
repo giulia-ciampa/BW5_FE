@@ -1,5 +1,6 @@
 import { useState, type SubmitEvent } from "react";
 import { Button, Card, Col, Container, Row, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -7,6 +8,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -30,7 +32,14 @@ function Login() {
       });
 
       if (!response.ok) {
-        throw new Error("Credenziali non valide");
+        let messaggioErrore = "Non riesco a leggere la risposta del server :(";
+        try {
+          const errorData = await response.json();
+          if (errorData.message) messaggioErrore = errorData.message;
+        } catch {
+          // il body non era JSON valido, resta il messaggio di default
+        }
+        throw new Error(messaggioErrore);
       }
 
       const data = await response.json();
@@ -38,10 +47,10 @@ function Login() {
       console.log("Login effettuato:", data);
 
       localStorage.setItem("accessToken", data.accessToken);
+
+      navigate("/home");
     } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "Errore durante il login",
-      );
+      setError(error instanceof Error ? error.message : "Errore nel login");
     } finally {
       setLoading(false);
     }
