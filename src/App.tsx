@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Registrazione from "./components/Registrazione";
 import Bw5Footer from "./components/Bw5Footer";
 import "./index.css";
+import Login from "./components/Login";
 import LandingPage from "./components/LandingPage";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -17,6 +18,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/registrazione" element={<Registrazione />} />
+              <Route path="/login" element={<Login />} />
             </Routes>
           </main>
           <Bw5Footer />
