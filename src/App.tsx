@@ -5,6 +5,8 @@ import Registrazione from "./components/Registrazione";
 import Bw5Footer from "./components/Bw5Footer";
 import "./index.css";
 import Login from "./components/Login";
+import LandingPage from "./components/LandingPage";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
           <Bw5Navbar></Bw5Navbar>
           <main className="flex-grow-1">
             <Routes>
-              <Route path="/" />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/registrazione" element={<Registrazione />} />
               <Route path="/login" element={<Login />} />
             </Routes>

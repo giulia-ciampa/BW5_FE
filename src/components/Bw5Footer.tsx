@@ -70,7 +70,7 @@ function Bw5Footer() {
           {/* Copyright */}
           <Col md={7} lg={8} className="text-center text-md-start">
             <p className="mb-0">
-              © 2026 Copyright:
+              © {new Date().getFullYear()} Copyright:
               <a href="#" className="text-warning text-decoration-none ms-1">
                 <strong>CortoCircuito.com</strong>
               </a>

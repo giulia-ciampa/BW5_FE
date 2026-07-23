@@ -28,7 +28,7 @@ function Bw5Navbar() {
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#chisiamo">Chi Siamo</Nav.Link>
             <Nav.Link href="#servizi">Servizi</Nav.Link>
-            <NavDropdown title="Area Riservata" id="basic-nav-dropdown">
+            <NavDropdown title="BackOffice" id="basic-nav-dropdown">
               <NavDropdown.Item href="#dashboard">Dashboard</NavDropdown.Item>
               <NavDropdown.Item href="#utenti">
                 Gestione Utenti
