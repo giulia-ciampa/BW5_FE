@@ -5,8 +5,20 @@ import Registrazione from "./components/Registrazione";
 import Bw5Footer from "./components/Bw5Footer";
 import "./index.css";
 import Login from "./components/Login";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "./redux/reducers/AuthSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      dispatch(setAccessToken(savedToken));
+    }
+  }, [dispatch]);
+
   return (
     <>
       <div className="d-flex flex-column min-vh-100">

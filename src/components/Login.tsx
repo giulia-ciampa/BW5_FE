@@ -1,6 +1,8 @@
 import { useState, type SubmitEvent } from "react";
 import { Button, Card, Col, Container, Row, Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { setAccessToken } from "../redux/reducers/AuthSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -9,6 +11,7 @@ function Login() {
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -47,6 +50,7 @@ function Login() {
       console.log("Login effettuato:", data);
 
       localStorage.setItem("accessToken", data.accessToken);
+      dispatch(setAccessToken(data.accessToken));
 
       navigate("/home");
     } catch (error) {
