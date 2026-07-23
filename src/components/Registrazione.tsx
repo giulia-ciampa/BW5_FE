@@ -55,12 +55,14 @@ function Registrazione() {
         <Col>
           <Form
             onSubmit={handleSubmit}
-            className="my-5 border border-2 border-primary rounded-3 p-3"
+            className="my-5 border border-4 border-warning rounded-3 p-3 bg-dark"
           >
             <Form.Group className="mb-4" controlId="usernameInput">
-              <Form.Label className="w-100 text-center">username</Form.Label>
+              <Form.Label className="w-100 text-center text-warning">
+                Username
+              </Form.Label>
               <Form.Control
-                className="w-100 text-center"
+                className="w-100 text-center formControl border-0"
                 type="text"
                 placeholder="Digita qui il tuo username..."
                 value={formData.username}
@@ -70,9 +72,11 @@ function Registrazione() {
             </Form.Group>
 
             <Form.Group className="mb-4" controlId="emailInput">
-              <Form.Label className="w-100 text-center">email</Form.Label>
+              <Form.Label className="w-100 text-center  text-warning">
+                email
+              </Form.Label>
               <Form.Control
-                className="w-100 text-center"
+                className="w-100 text-center formControl border-0"
                 type="email"
                 placeholder="Digita qui la tua email..."
                 autoComplete="off"
@@ -83,9 +87,11 @@ function Registrazione() {
             </Form.Group>
 
             <Form.Group className="mb-4" controlId="passwordInput">
-              <Form.Label className="w-100 text-center">password</Form.Label>
+              <Form.Label className="w-100 text-center  text-warning">
+                Password
+              </Form.Label>
               <Form.Control
-                className="w-100 text-center"
+                className="w-100 text-center formControl border-0"
                 type="password"
                 placeholder="Digita qui la tua password..."
                 autoComplete="new-password"
@@ -96,9 +102,11 @@ function Registrazione() {
             </Form.Group>
 
             <Form.Group className="mb-4" controlId="nomeInput">
-              <Form.Label className="w-100 text-center">nome</Form.Label>
+              <Form.Label className="w-100 text-center  text-warning">
+                Nome
+              </Form.Label>
               <Form.Control
-                className="w-100 text-center"
+                className="w-100 text-center formControl border-0"
                 type="text"
                 placeholder="Digita qui il tuo nome..."
                 value={formData.nome}
@@ -108,9 +116,11 @@ function Registrazione() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="cognomeInput">
-              <Form.Label className="w-100 text-center">cognome</Form.Label>
+              <Form.Label className="w-100 text-center  text-warning">
+                Cognome
+              </Form.Label>
               <Form.Control
-                className="w-100 text-center"
+                className="w-100 text-center formControl border-0"
                 type="text"
                 placeholder="Digita qui il tuo cognome..."
                 value={formData.cognome}
@@ -120,7 +130,7 @@ function Registrazione() {
             </Form.Group>
 
             <div className="d-flex justify-content-center mt-4">
-              <Button type="submit" variant="primary" className="">
+              <Button type="submit" variant="warning" className="">
                 Registrati
               </Button>
             </div>
