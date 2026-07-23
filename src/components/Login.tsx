@@ -49,7 +49,6 @@ function Login() {
 
       console.log("Login effettuato:", data);
 
-      localStorage.setItem("accessToken", data.accessToken);
       dispatch(setAccessToken(data.accessToken));
 
       navigate("/home");
