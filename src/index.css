@@ -4,3 +4,7 @@ body,
   height: 100%;
   margin: 0;
 }
+
+.formControl {
+  background-color: rgb(188, 188, 188);
+}
