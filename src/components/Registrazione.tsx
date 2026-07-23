@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { Button, Col, Container, Row } from "react-bootstrap"
-import Form from "react-bootstrap/Form"
-import { useNavigate } from "react-router"
+import { useState } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router";
 
 function Registrazione() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // 1. Stato per raccogliere i dati del form
   const [formData, setFormData] = useState({
@@ -13,19 +13,19 @@ function Registrazione() {
     password: "",
     nome: "",
     cognome: "",
-  })
+  });
 
   // Aggiorna lo stato man mano che l'utente scrive nei campi
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   // 2. Funzione chiamata all'invio del Form
   const handleSubmit = async (e: React.SubmitEvent) => {
-    e.preventDefault() // Evita il ricaricamento della pagina
+    e.preventDefault(); // Evita il ricaricamento della pagina
 
     try {
       const response = await fetch("http://localhost:3001/auth/registrazione", {
@@ -34,20 +34,20 @@ function Registrazione() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
       if (response.ok) {
-        alert("Registrazione avvenuta con successo!")
+        alert("Registrazione avvenuta con successo!");
         //reindirizza alla pagina di login
-        navigate("/login")
+        navigate("/login");
       } else {
-        alert("Errore durante la registrazione")
+        alert("Errore durante la registrazione");
       }
     } catch (error) {
-      console.error("Errore di rete:", error)
-      alert("Impossibile connettersi al server")
+      console.error("Errore di rete:", error);
+      alert("Impossibile connettersi al server");
     }
-  }
+  };
 
   return (
     <Container className="w-50 d-flex flex-column align-content-center vh-100 justify-content-center">
@@ -138,7 +138,7 @@ function Registrazione() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
 
-export default Registrazione
+export default Registrazione;

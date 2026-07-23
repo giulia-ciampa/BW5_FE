@@ -19,13 +19,22 @@ function Bw5Navbar() {
   return (
     <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="shadow-sm">
       <Container>
-        <Navbar.Brand href="#home" className="fw-bold text-warning">
+        <Navbar.Brand
+          onClick={() => navigate("/")}
+          className="fw-bold text-warning"
+          style={{ cursor: "pointer" }}
+        >
           Corto Circuito & C.
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link
+              onClick={() => navigate("/")}
+              style={{ cursor: "pointer" }}
+            >
+              Home
+            </Nav.Link>
             <Nav.Link href="#chisiamo">Chi Siamo</Nav.Link>
             <Nav.Link href="#servizi">Servizi</Nav.Link>
             <NavDropdown title="BackOffice" id="basic-nav-dropdown">

@@ -1,7 +1,7 @@
 import { useState, type SubmitEvent } from "react";
 import { Button, Card, Col, Container, Row, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { setAccessToken } from "../redux/reducers/AuthSlice";
 
 function Login() {
@@ -58,52 +58,102 @@ function Login() {
       setLoading(false);
     }
   };
-
   return (
-    <Container fluid={true} className="mt-5">
-      <Row className="d-flex justify-content-center">
-        <Col xs={12} sm={10} md={8} lg={6} xl={4}>
-          <Card>
-            <Card.Body>
-              <Card.Title>Login</Card.Title>
+    <div className="py-5">
+      <Container fluid={true} className="mt-5">
+        <Row className="d-flex justify-content-center">
+          <Col xs={12} sm={10} md={8} lg={6} xl={4}>
+            <div className="text-center mb-4">
+              <h2 className="fw-bold text-white">
+                Area Riservata{" "}
+                <span className="text-warning">Corto Circuito & C.</span>
+              </h2>
+              <p className="text-light">
+                Inserisci le tue credenziali per accedere
+              </p>
+            </div>
 
-              <Form onSubmit={handleLogin}>
-                <Form.Group className="mb-3" controlId="loginEmail">
-                  <Form.Label>Email</Form.Label>
+            <Card
+              className="text-white border-0 shadow-lg p-3"
+              style={{
+                background: "rgba(26, 26, 26, 0.85)",
+                borderRadius: "16px",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255, 193, 7, 0.3)",
+              }}
+            >
+              <Card.Body>
+                <Card.Title className="text-warning fw-bold fs-3 mb-4">
+                  Login
+                </Card.Title>
 
-                  <Form.Control
-                    type="email"
-                    required
-                    placeholder="name@example.com"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </Form.Group>
+                <Form onSubmit={handleLogin}>
+                  <Form.Group className="mb-3" controlId="loginEmail">
+                    <Form.Label className="text-light">Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      required
+                      placeholder="name@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="bg-dark text-white border-secondary py-2"
+                    />
+                  </Form.Group>
 
-                <Form.Group className="mb-3" controlId="loginPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Group className="mb-4" controlId="loginPassword">
+                    <Form.Label className="text-light">Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="password"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="bg-dark text-white border-secondary py-2"
+                    />
+                  </Form.Group>
 
-                  <Form.Control
-                    type="password"
-                    placeholder="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
+                  {error && <p className="text-danger mb-3">{error}</p>}
 
-                {error && <p className="text-danger">{error}</p>}
+                  <Button
+                    type="submit"
+                    variant="warning"
+                    disabled={loading}
+                    className="w-100 fw-bold text-dark py-2 shadow-sm rounded-pill mb-3"
+                  >
+                    {loading ? "Accesso in corso..." : "Login"}
+                  </Button>
+                </Form>
 
-                <Button type="submit" disabled={loading}>
-                  {loading ? "Accesso..." : "Login"}
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                <div className="text-center mt-3">
+                  <p className="text-light mb-1" style={{ fontSize: "0.9rem" }}>
+                    Non sei registrato?{" "}
+                    <Link
+                      to="/registrazione"
+                      className="text-warning text-decoration-none fw-bold"
+                    >
+                      Registrati subito
+                    </Link>
+                  </p>
+                </div>
+
+                <div className="text-center mt-3">
+                  <p
+                    className="text-light mb-0"
+                    style={{ fontSize: "0.85rem" }}
+                  >
+                    Password dimenticata?{" "}
+                    <span className="text-warning">
+                      Contatta il nostro supporto
+                    </span>
+                  </p>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
-
 export default Login;
