@@ -9,7 +9,11 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import type { AllClientsResponse, Cliente } from "../interfaces/interfaces";
+import type {
+  AllClientsResponse,
+  Cliente,
+  Error,
+} from "../interfaces/interfaces";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 
@@ -92,7 +96,8 @@ function ClientiList() {
         });
 
         if (!response.ok) {
-          throw new Error("Errore nel caricamento della lista clienti.");
+          const errorData: Error = await response.json();
+          throw new Error(errorData.message);
         }
 
         const data: AllClientsResponse = await response.json();
