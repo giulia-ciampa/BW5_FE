@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -6,22 +6,22 @@ import {
   Button,
   ToastContainer,
   Toast,
-} from "react-bootstrap"
-import { useNavigate } from "react-router"
+} from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 function LandingPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   //  apertura e chiusura del toast, all'inizio chiuso
-  const [showToast, setShowToast] = useState(false)
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowToast(true)
-    }, 1000) //comprare dopo un sec
+      setShowToast(true);
+    }, 1000); //comprare dopo un sec
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="py-3">
@@ -75,13 +75,25 @@ function LandingPage() {
               </h3>
               <div className="text-light">
                 <p className="mb-1">
-                  <i className="bi bi-arrow-right-short me-1"></i>Inserisci
+                  <i
+                    className="bi bi-arrow-right-short me-1"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                  Inserisci
                 </p>
                 <p className="mb-1">
-                  <i className="bi bi-arrow-right-short me-1"></i>Consulta
+                  <i
+                    className="bi bi-arrow-right-short me-1"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                  Consulta
                 </p>
                 <p className="mb-1">
-                  <i className="bi bi-arrow-right-short me-1"></i>Aggiorna
+                  <i
+                    className="bi bi-arrow-right-short me-1"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                  Aggiorna
                 </p>
                 <p className="mb-1">
                   I dati dei clienti Business, le sedi operative e i contatti
@@ -174,8 +186,8 @@ function LandingPage() {
               variant="warning"
               className="fw-bold text-dark w-100 py-2 shadow-sm rounded-pill"
               onClick={() => {
-                setShowToast(false)
-                navigate("/registrazione")
+                setShowToast(false);
+                navigate("/registrazione");
               }}
             >
               Approfitta dell'Offerta <i className="bi bi-arrow-right ms-1"></i>
@@ -184,7 +196,7 @@ function LandingPage() {
         </Toast>
       </ToastContainer>
     </div>
-  )
+  );
 }
 
-export default LandingPage
+export default LandingPage;

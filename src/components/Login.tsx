@@ -90,6 +90,7 @@ function Login() {
                   <Form.Group className="mb-3" controlId="loginEmail">
                     <Form.Label className="text-light">Email</Form.Label>
                     <Form.Control
+                      autoComplete="off"
                       type="email"
                       required
                       placeholder="name@example.com"
@@ -104,6 +105,7 @@ function Login() {
                     <Form.Control
                       type="password"
                       placeholder="password"
+                      autoComplete="new-password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}

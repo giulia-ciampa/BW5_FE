@@ -207,3 +207,9 @@ export interface Error {
   message: string;
   time: string;
 }
+
+export interface ErrorWithList {
+  message: string;
+  timestamp: string;
+  errorsList: string[];
+}
