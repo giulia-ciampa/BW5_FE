@@ -7,6 +7,8 @@ import "./index.css";
 import Login from "./components/Login";
 import LandingPage from "./components/LandingPage";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import Home from "./components/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/registrazione" element={<Registrazione />} />
               <Route path="/login" element={<Login />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/home" element={<Home />} />
+              </Route>
             </Routes>
           </main>
           <Bw5Footer />
