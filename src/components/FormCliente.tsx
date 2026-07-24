@@ -1,12 +1,29 @@
-import { useState } from "react";
+import {
+  useState,
+  useEffect,
+  type ChangeEvent,
+  type SyntheticEvent,
+} from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
+import type {
+  ClienteFormData,
+  Provincia,
+  Comune,
+} from "../interfaces/ClienteInterface";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
+import type { ErrorWithList } from "../interfaces/interfaces";
 
 function FormCliente() {
   const navigate = useNavigate();
+  const apiurl = import.meta.env.VITE_API_URL;
+  const accessToken = useSelector(
+    (rootState: RootState) => rootState.auth.accessToken,
+  );
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ClienteFormData>({
     ragioneSociale: "",
     partitaIva: "",
     email: "",
@@ -32,10 +49,26 @@ function FormCliente() {
     capSedeOperativa: "",
   });
 
+  const [province, setProvince] = useState<Provincia[]>([]);
+  const [comuniLegale, setComuniLegale] = useState<Comune[]>([]);
+  const [comuniOperativa, setComuniOperativa] = useState<Comune[]>([]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    fetch(apiurl + "/province", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data: Provincia[]) => setProvince(data))
+      .catch((err) => console.error("Errore fetch province:", err));
+  }, []);
+
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({
@@ -44,13 +77,77 @@ function FormCliente() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleProvinciaLegaleChange = async (
+    e: ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const sigla = e.target.value;
+    setFormData({
+      ...formData,
+      siglaProvinciaSedeLegale: sigla,
+      denominazioneComuneSedeLegale: "",
+    });
+
+    if (!sigla) {
+      setComuniLegale([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(apiurl + `/comuni/${sigla}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
+      });
+      const data: Comune[] = await response.json();
+      setComuniLegale(data);
+      console.log(data);
+    } catch (err) {
+      console.error("Errore fetch comuni sede legale:", err);
+    }
+  };
+
+  const handleProvinciaOperativaChange = async (
+    e: ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const sigla = e.target.value;
+    setFormData({
+      ...formData,
+      siglaProvinciaSedeOperativa: sigla,
+      denominazioneComuneSedeOperativa: "",
+    });
+
+    if (!sigla) {
+      setComuniOperativa([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(apiurl + `/comuni/${sigla}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
+      });
+      const data: Comune[] = await response.json();
+      setComuniOperativa(data);
+    } catch (err) {
+      console.error("Errore fetch comuni sede operativa:", err);
+    }
+  };
+
+  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/clienti", {
+      const response = await fetch(apiurl + "/clienti", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
@@ -58,7 +155,13 @@ function FormCliente() {
         alert("Cliente registrato con successo!");
         navigate("/home");
       } else {
-        alert("Errore durante la registrazione");
+        const data: ErrorWithList = await response.json();
+        if (data.errorsList)
+          alert(
+            data.errorsList.map(
+              (error) => "Errore: " + error.replace("-", "") + "\n",
+            ),
+          );
       }
     } catch (err) {
       console.error(err);
@@ -73,7 +176,7 @@ function FormCliente() {
         className="border border-4 border-warning rounded-3 p-4 bg-dark text-white shadow-lg"
       >
         <h3 className="text-center text-warning mb-4 fw-bold">
-          Registrazione Cliente (Completo)
+          Registrazione Cliente
         </h3>
 
         <h5 className="text-warning mb-3 border-bottom pb-2">
@@ -306,30 +409,48 @@ function FormCliente() {
           </Col>
           <Col md={2}>
             <Form.Group className="mb-3">
-              <Form.Label className="text-warning">
-                Provincia (Sigla)
-              </Form.Label>
-              <Form.Control
+              <Form.Label className="text-warning">Provincia</Form.Label>
+              <Form.Select
                 className="bg-secondary text-white border-0"
-                type="text"
                 name="siglaProvinciaSedeLegale"
                 value={formData.siglaProvinciaSedeLegale}
-                onChange={handleChange}
+                onChange={handleProvinciaLegaleChange}
                 required
-              />
+              >
+                <option value="">Provincia...</option>
+                {province.map((p) => (
+                  <option key={p.sigla} value={p.sigla}>
+                    {p.sigla}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col md={3}>
             <Form.Group className="mb-3">
               <Form.Label className="text-warning">Comune</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="bg-secondary text-white border-0"
-                type="text"
                 name="denominazioneComuneSedeLegale"
                 value={formData.denominazioneComuneSedeLegale}
                 onChange={handleChange}
                 required
-              />
+                disabled={!formData.siglaProvinciaSedeLegale}
+              >
+                <option value="">Comune...</option>
+                {comuniLegale.map((c, index) => {
+                  const nomeComune = c.denominazione || c.nome || "";
+                  return (
+                    <option
+                      className="text-light"
+                      key={index}
+                      value={nomeComune}
+                    >
+                      {nomeComune}
+                    </option>
+                  );
+                })}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
@@ -395,30 +516,44 @@ function FormCliente() {
           </Col>
           <Col md={2}>
             <Form.Group className="mb-3">
-              <Form.Label className="text-warning">
-                Provincia (Sigla)
-              </Form.Label>
-              <Form.Control
+              <Form.Label className="text-warning">Provincia</Form.Label>
+              <Form.Select
                 className="bg-secondary text-white border-0"
-                type="text"
                 name="siglaProvinciaSedeOperativa"
                 value={formData.siglaProvinciaSedeOperativa}
-                onChange={handleChange}
+                onChange={handleProvinciaOperativaChange}
                 required
-              />
+              >
+                <option value="">Provincia...</option>
+                {province.map((p) => (
+                  <option key={p.sigla} value={p.sigla}>
+                    {p.sigla}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
           <Col md={3}>
             <Form.Group className="mb-3">
               <Form.Label className="text-warning">Comune</Form.Label>
-              <Form.Control
+              <Form.Select
                 className="bg-secondary text-white border-0"
-                type="text"
                 name="denominazioneComuneSedeOperativa"
                 value={formData.denominazioneComuneSedeOperativa}
                 onChange={handleChange}
                 required
-              />
+                disabled={!formData.siglaProvinciaSedeOperativa}
+              >
+                <option value="">Comune...</option>
+                {comuniOperativa.map((c, index) => {
+                  const nomeComune = c.denominazione || c.nome || "";
+                  return (
+                    <option key={index} value={nomeComune}>
+                      {nomeComune}
+                    </option>
+                  );
+                })}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
