@@ -9,7 +9,7 @@ import LandingPage from "./components/LandingPage";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
-import FormCliente from "./components/FormCliente";
+import CreaFattura from "./components/CreaFattura";
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/registrazione" element={<Registrazione />} />
+              <Route path="/crea-fattura" element={<CreaFattura />} />
               <Route path="/login" element={<Login />} />
               <Route path="/nuovo-cliente" element={<FormCliente />} />
               <Route element={<ProtectedRoute />}>

@@ -1,6 +1,9 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap"
+import { useNavigate } from "react-router"
 
 function Home() {
+  const navigate = useNavigate()
+
   return (
     <Container fluid className="py-5 border-top border-secondary">
       <Row className="text-center g-4 d-flex flex-column align-items-center">
@@ -19,7 +22,10 @@ function Home() {
           </div>
         </Col>
         <Col md={4} style={{ cursor: "pointer" }}>
-          <div className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100">
+          <div
+            className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100"
+            onClick={() => navigate("/crea-fattura")}
+          >
             <div
               className="mb-3"
               style={{ color: "#ffc107", fontSize: "3.5rem" }}
@@ -65,7 +71,7 @@ function Home() {
         </Col>
       </Row>
     </Container>
-  );
+  )
 }
 
-export default Home;
+export default Home
