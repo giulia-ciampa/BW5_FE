@@ -38,16 +38,16 @@ function CreaFattura() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [clienti, setClienti] = useState<Cliente[]>([])
 
-  // 2. Aggiorna lo stato man mano che l'utente scrive nei campi
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLElement>) => {
+    const target = e.target as HTMLInputElement | HTMLSelectElement
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [target.name]: target.value,
     })
   }
 
   // 3. Funzione chiamata all'invio del Form (TUTTO IL CODICE È DENTRO)
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault() // Evita il ricaricamento della pagina
     setErrorMessage(null)
 
@@ -166,7 +166,7 @@ function CreaFattura() {
                 className="w-100 text-center formControl border-0"
                 name="idCliente"
                 value={formData.idCliente}
-                onChange={handleChange as any}
+                onChange={handleChange}
               >
                 <option value="">-- Seleziona un cliente --</option>
                 {clienti.map((cliente) => (
