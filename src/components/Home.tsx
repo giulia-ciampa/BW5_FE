@@ -1,8 +1,8 @@
-import { Col, Container, Row } from "react-bootstrap"
-import { useNavigate } from "react-router"
+import { Col, Container, Row } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 function Home() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Container fluid className="py-5 border-top border-secondary">
@@ -42,7 +42,11 @@ function Home() {
             </small>
           </div>
         </Col>
-        <Col md={4} style={{ cursor: "pointer" }}>
+        <Col
+          md={4}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/clienti")}
+        >
           <div className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100">
             <div
               className="mb-3"
@@ -75,7 +79,7 @@ function Home() {
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
 
-export default Home
+export default Home;
