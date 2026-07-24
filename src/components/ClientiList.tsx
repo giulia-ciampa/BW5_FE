@@ -33,7 +33,11 @@ function ClientiList() {
   const [filtroDataInserimentoMax, setFiltroDataInserimentoMax] =
     useState<string>("");
   const [filtroFatturatoMin, setFiltroFatturatoMin] = useState<string>("");
+  const [debouncedFatturatoMin, setDebouncedFatturatoMin] =
+    useState<string>("");
   const [filtroFatturatoMax, setFiltroFatturatoMax] = useState<string>("");
+  const [debouncedFatturatoMax, setDebouncedFatturatoMax] =
+    useState<string>("");
   const [filtroDataUltimoContattoMin, setFiltroDataUltimoContattoMin] =
     useState<string>("");
   const [filtroDataUltimoContattoMax, setFiltroDataUltimoContattoMax] =
@@ -50,10 +54,12 @@ function ClientiList() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedRagioneSociale(filtroRagioneSociale);
+      setDebouncedFatturatoMin(filtroFatturatoMin);
+      setDebouncedFatturatoMax(filtroFatturatoMax);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [filtroRagioneSociale]);
+  }, [filtroRagioneSociale, filtroFatturatoMin, filtroFatturatoMax]);
 
   useEffect(() => {
     const fetchClienti = async (pageIndex: number, pageSize: number) => {
@@ -70,10 +76,10 @@ function ClientiList() {
           params.append("ragioneSociale", debouncedRagioneSociale.trim());
         }
         if (filtroFatturatoMin !== "") {
-          params.append("fatturatoMinimo", filtroFatturatoMin);
+          params.append("fatturatoMinimo", debouncedFatturatoMin.trim());
         }
         if (filtroFatturatoMax !== "") {
-          params.append("fatturatoMassimo", filtroFatturatoMax);
+          params.append("fatturatoMassimo", debouncedFatturatoMax.trim());
         }
         if (filtroDataInserimentoMin !== "") {
           params.append("dataInserimentoMin", filtroDataInserimentoMin);
@@ -117,8 +123,8 @@ function ClientiList() {
     debouncedRagioneSociale,
     filtroDataInserimentoMin,
     filtroDataInserimentoMax,
-    filtroFatturatoMin,
-    filtroFatturatoMax,
+    debouncedFatturatoMin,
+    debouncedFatturatoMax,
     filtroDataUltimoContattoMin,
     filtroDataUltimoContattoMax,
   ]);

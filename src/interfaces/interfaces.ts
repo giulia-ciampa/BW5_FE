@@ -202,3 +202,8 @@ export interface Sort {
   sorted: boolean;
   unsorted: boolean;
 }
+
+export interface Error {
+  message: string;
+  time: string;
+}
