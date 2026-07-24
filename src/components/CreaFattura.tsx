@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react"
 import { Button, Col, Container, Row } from "react-bootstrap"
 import Form from "react-bootstrap/Form"
+import type { Cliente } from "../interfaces/interfaces"
 
 //Interfaccia per il tipo Cliente
-interface Cliente {
-  id: string
-  nome: string
-  cognome: string
-  ragioneSociale: string
-  partitaIva: number
-}
 
 // dati del form
 interface FatturaFormState {
@@ -20,7 +14,7 @@ interface FatturaFormState {
 
 // dati che vengono inviati
 interface FatturaPayload {
-  data: string // Formato "DD/MM/YYYY" (es. "25/02/2026")
+  data: string
   importo: number
   idCliente: string
 }
@@ -59,13 +53,15 @@ function CreaFattura() {
 
     // Conversione "YYYY-MM-DD" in "DD/MM/YYYY"
     const [year, month, day] = formData.data.split("-")
-    const dataFormattata = `${day}/${month}/${year}`
+    const dataFormattata = `${year}-${month}-${day}`
 
     const payload: FatturaPayload = {
       data: dataFormattata,
       importo: parseFloat(formData.importo) || 0,
       idCliente: formData.idCliente,
     }
+
+    console.log("payload inviato:", payload)
 
     try {
       const response = await fetch("http://localhost:3001/fatture", {
@@ -169,12 +165,14 @@ function CreaFattura() {
                 onChange={handleChange}
               >
                 <option value="">-- Seleziona un cliente --</option>
-                {clienti.map((cliente) => (
-                  <option key={cliente.id} value={cliente.id}>
-                    {cliente.ragioneSociale ||
-                      `${cliente.nome} ${cliente.cognome || ""}`}
-                  </option>
-                ))}
+                {clienti.map((cliente) => {
+                  const idReale = cliente.idCliente
+                  return (
+                    <option key={idReale} value={idReale}>
+                      {cliente.ragioneSociale}
+                    </option>
+                  )
+                })}
               </Form.Select>
             </Form.Group>
 
