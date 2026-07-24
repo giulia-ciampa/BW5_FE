@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap"
 
 function Bw5Footer() {
   return (
@@ -8,13 +8,13 @@ function Bw5Footer() {
           {/* Colonna 1: Info Azienda */}
           <Col md={3} lg={3} xl={3} className="mx-auto mt-3">
             <h5 className="text-uppercase mb-4 fw-bold text-warning">
-              Corto Circuito & C.
+              EPIC ENERGY SERVICES
             </h5>
             <p>
-              Startup energetica e-commerce gestita da un team disviluppatori
+              Startup energetica gestita da un team di sviluppatori
               specializzata nella fornitura di energia elettrica ad alta
               tensione e soluzioni digitali rapide (ma con qualche piccolo
-              rischio di sovraccarico sui server).
+              rischio di sovraccarico sui server)
             </p>
           </Col>
 
@@ -72,14 +72,14 @@ function Bw5Footer() {
             <p className="mb-0">
               © {new Date().getFullYear()} Copyright:
               <a href="#" className="text-warning text-decoration-none ms-1">
-                <strong>CortoCircuito.com</strong>
+                <strong>EPIC ENERGY SERVICES</strong>
               </a>
             </p>
           </Col>
         </Row>
       </Container>
     </footer>
-  );
+  )
 }
 
-export default Bw5Footer;
+export default Bw5Footer
