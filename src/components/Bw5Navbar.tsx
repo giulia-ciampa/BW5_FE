@@ -13,7 +13,7 @@ function Bw5Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -24,13 +24,13 @@ function Bw5Navbar() {
           className="fw-bold text-warning"
           style={{ cursor: "pointer" }}
         >
-          Corto Circuito & C.
+          EPIC ENERGY SERVICES
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/home")}
               style={{ cursor: "pointer" }}
             >
               Home
