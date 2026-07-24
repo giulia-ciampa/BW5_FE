@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import {
   Container,
   Row,
@@ -6,60 +6,60 @@ import {
   Button,
   ToastContainer,
   Toast,
-} from "react-bootstrap";
-import { useNavigate } from "react-router";
+} from "react-bootstrap"
+import { useNavigate } from "react-router"
 
 function LandingPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   //  apertura e chiusura del toast, all'inizio chiuso
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowToast(true);
-    }, 1000); //comprare dopo un sec
+      setShowToast(true)
+    }, 1000) //comprare dopo un sec
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
-    <div className="py-5">
-      <Container className="py-5 text-center">
+    <div className="py-3">
+      <Container className="py-3 text-center">
         <Row className="justify-content-center">
           <Col lg={8}>
             <h1 className="display-4 fw-bold text-white mb-4">
-              L'Energia del Futuro,{" "}
+              Il tuo gestionale <br></br>
               <span className="text-warning">a portata di click</span>
             </h1>
             <p className="lead text-light mb-4">
-              Soluzioni energetiche e-commerce ad alta tensione, rapide e smart.
-              Gestisci tutto online con la massima efficienza.
+              Piattaforma gestionale interna per la gestione dei clienti
+              business, anagrafiche e fatturazione aziendale.
             </p>
             <div>
               <Button
                 onClick={() => navigate("/registrazione")}
                 variant="warning"
                 size="lg"
-                className="me-3 fw-bold text-dark"
+                className="me-3 text-dark"
               >
-                Registrati subito!
+                Registrati
               </Button>
               <Button
                 variant="outline-light"
                 size="lg"
                 onClick={() => navigate("/login")}
               >
-                Accedi alla tua Area Riservata
+                Accedi al portale
               </Button>
             </div>
           </Col>
         </Row>
       </Container>
 
-      <Container className="py-5 border-top border-secondary">
-        <Row className="text-center g-4">
-          <Col md={4}>
+      <Container className="py-3 border-top border-secondary">
+        <Row className="text-center g-4 d-flex justify-content-center">
+          <Col md={5}>
             <div className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100">
               <div
                 className="mb-3"
@@ -71,14 +71,26 @@ function LandingPage() {
                 ></i>
               </div>
               <h3 className="h4 fw-bold" style={{ cursor: "pointer" }}>
-                Attivazione Rapida
+                Gestione clienti
               </h3>
-              <p className="text-light">
-                Poche mosse online e la tua fornitura è attiva in tempo record.
-              </p>
+              <div className="text-light">
+                <p className="mb-1">
+                  <i className="bi bi-arrow-right-short me-1"></i>Inserisci
+                </p>
+                <p className="mb-1">
+                  <i className="bi bi-arrow-right-short me-1"></i>Consulta
+                </p>
+                <p className="mb-1">
+                  <i className="bi bi-arrow-right-short me-1"></i>Aggiorna
+                </p>
+                <p className="mb-1">
+                  I dati dei clienti Business, le sedi operative e i contatti
+                  aziendali
+                </p>
+              </div>
             </div>
           </Col>
-          <Col md={4}>
+          <Col md={5}>
             <div className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100">
               <div
                 className="mb-3"
@@ -87,31 +99,22 @@ function LandingPage() {
                 <i className="bi bi-laptop" style={{ cursor: "pointer" }}></i>
               </div>
               <h3 className="h4 fw-bold" style={{ cursor: "pointer" }}>
-                100% Digitale
+                Controllo Fatture
               </h3>
-              <p className="text-light">
-                Gestisci bollette e consumi direttamente dalla nostra
-                piattaforma web.
-              </p>
-            </div>
-          </Col>
-          <Col md={4}>
-            <div className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100">
-              <div
-                className="mb-3"
-                style={{ color: "#ffc107", fontSize: "3.5rem" }}
-              >
-                <i
-                  className="bi bi-lightbulb-fill"
-                  style={{ cursor: "pointer" }}
-                ></i>
+              <div className="text-light">
+                <p className="mb-1">
+                  <i className="bi bi-arrow-right-short me-1"></i>Registra nuove
+                  fatture
+                </p>
+                <p className="mb-1">
+                  <i className="bi bi-arrow-right-short me-1"></i>Monitora gli
+                  importi
+                </p>
+                <p className="mb-1">
+                  <i className="bi bi-arrow-right-short me-1"></i>Aggiorna gli
+                  stati dei pagamenti{" "}
+                </p>
               </div>
-              <h3 className="h4 fw-bold" style={{ cursor: "pointer" }}>
-                Tariffe Smart
-              </h3>
-              <p className="text-light">
-                Piani energetici su misura senza sorprese in bolletta.
-              </p>
             </div>
           </Col>
         </Row>
@@ -160,15 +163,19 @@ function LandingPage() {
               style={{ fontSize: "0.95rem", lineHeight: "1.5" }}
             >
               Passa a{" "}
-              <span className="text-warning fw-bold">Corto Circuito & C.</span>:
-              azzeriamo i costi di attivazione e ricevi un bonus immediato!
+              <span className="text-warning fw-bold">Abbonamento mensa</span>:
+              <p className="my-2">
+                Se ti abboni hai{" "}
+                <span className="fw-bold">un'ora e mezza di pausa</span>,
+                altrimenti solo mezz'ora!
+              </p>
             </p>
             <Button
               variant="warning"
               className="fw-bold text-dark w-100 py-2 shadow-sm rounded-pill"
               onClick={() => {
-                setShowToast(false);
-                navigate("/registrazione");
+                setShowToast(false)
+                navigate("/registrazione")
               }}
             >
               Approfitta dell'Offerta <i className="bi bi-arrow-right ms-1"></i>
@@ -177,7 +184,7 @@ function LandingPage() {
         </Toast>
       </ToastContainer>
     </div>
-  );
+  )
 }
 
-export default LandingPage;
+export default LandingPage
