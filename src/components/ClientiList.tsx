@@ -42,6 +42,8 @@ function ClientiList() {
     useState<string>("");
   const [filtroDataUltimoContattoMax, setFiltroDataUltimoContattoMax] =
     useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("");
+  const [direction, setDirection] = useState<string>("DESC");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -72,8 +74,11 @@ function ClientiList() {
           size: pageSize.toString(),
         });
 
-        if (debouncedRagioneSociale.trim() !== "") {
-          params.append("ragioneSociale", debouncedRagioneSociale.trim());
+        if (sortBy !== "dataInserimento") {
+          params.append("sortBy", sortBy.trim());
+        }
+        if (direction !== "DESC") {
+          params.append("direction", direction.trim());
         }
         if (filtroFatturatoMin !== "") {
           params.append("fatturatoMinimo", debouncedFatturatoMin.trim());
@@ -127,6 +132,8 @@ function ClientiList() {
     debouncedFatturatoMax,
     filtroDataUltimoContattoMin,
     filtroDataUltimoContattoMax,
+    sortBy,
+    direction,
   ]);
 
   return (
@@ -289,6 +296,46 @@ function ClientiList() {
                 }}
                 className="bg-dark text-white border-secondary"
               />
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} sm={6} md={3} lg={2}>
+            <Form.Group controlId="sort">
+              <Form.Label className="small mb-1">Ordina per</Form.Label>
+              <Form.Select
+                size="sm"
+                value={sortBy}
+                onChange={(e) => {
+                  setSortBy(e.target.value);
+                  setPage(0);
+                }}
+                className="bg-dark text-white border-secondary"
+              >
+                <option value="">Ordina</option>
+                <option value="ragioneSociale">Ragione Sociale</option>
+                <option value="fatturatoAnnuale">Fatturato Annuale</option>
+                <option value="dataInserimento">Data di Inserimento</option>
+                <option value="dataUltimoContato">Data Ultimo Contatto</option>
+                <option value="siglaProvincia">Provincia Sede Legale</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} sm={6} md={3} lg={2}>
+            <Form.Group controlId="sort">
+              <Form.Label className="small mb-1">Ordina per</Form.Label>
+              <Form.Select
+                size="sm"
+                value={direction}
+                onChange={(e) => {
+                  setDirection(e.target.value);
+                  setPage(0);
+                }}
+                className="bg-dark text-white border-secondary"
+              >
+                <option value="DESC">DESC</option>
+                <option value="ASC">ASC</option>
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>
