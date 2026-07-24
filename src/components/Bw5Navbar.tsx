@@ -1,20 +1,20 @@
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
-import { logout } from "../redux/reducers/AuthSlice"
-import type { RootState } from "../redux/store"
-import { useNavigate } from "react-router"
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/reducers/AuthSlice";
+import type { RootState } from "../redux/store";
+import { useNavigate } from "react-router";
 
 function Bw5Navbar() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isAuthenticated = useSelector(
     (rs: RootState) => rs.auth.isAuthenticated,
-  )
+  );
 
   const handleLogout = () => {
-    dispatch(logout())
-    navigate("/login")
-  }
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="shadow-sm">
@@ -57,7 +57,7 @@ function Bw5Navbar() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
+  );
 }
 
-export default Bw5Navbar
+export default Bw5Navbar;
