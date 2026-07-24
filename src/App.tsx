@@ -9,6 +9,8 @@ import LandingPage from "./components/LandingPage";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ClientiList from "./components/ClientiList";
+
 import CreaFattura from "./components/CreaFattura";
 import FormCliente from "./components/FormCliente";
 function App() {
@@ -26,6 +28,7 @@ function App() {
               <Route path="/nuovo-cliente" element={<FormCliente />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/home" element={<Home />} />
+                <Route path="/clienti" element={<ClientiList />} />
               </Route>
             </Routes>
           </main>

@@ -5,7 +5,7 @@
 //   const page = Convert.toPage(json);
 
 export interface Page {
-  cliente: Cliente[];
+  clienti: Cliente[];
   empty: boolean;
   first: boolean;
   last: boolean;
@@ -104,6 +104,108 @@ export class Convert {
   public static pageToJson(value: Page): string {
     return JSON.stringify(value);
   }
+}
+
+// To parse this data:
+//
+//   import { Convert, AllClientsResponse } from "./file";
+//
+//   const allClientsResponse = Convert.toAllClientsResponse(json);
+
+export interface AllClientsResponse {
+  content: Content[];
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  pageable: Pageable;
+  size: number;
+  sort: Sort;
+  totalElements: number;
+  totalPages: number;
+}
+
+export interface Content {
+  ragioneSociale: string;
+  partitaIva: string;
+  email: string;
+  fatturatoAnnuale: number;
+  pec: string;
+  telefono: string;
+  emailContatto: string;
+  nomeContatto: string;
+  cognomeContatto: string;
+  telefonoContatto: string;
+  tipo: string;
+  utente: Utente;
+  sedeLegale: Sede;
+  sedeOperativa: Sede;
+  attivo: boolean;
+  dataInserimento: Date;
+  dataUltimoContatto: Date;
+  idCliente: string;
+  logoAziendale: string;
+}
+
+export interface Sede {
+  via: string;
+  civico: string;
+  localita: null;
+  cap: string;
+  comune: Comune;
+  indirizzoId: string;
+}
+
+export interface Comune {
+  codiceProvincia: number;
+  progressivoComune: number;
+  denominazione: string;
+  provincia: Provincia;
+  comuneId: string;
+}
+
+export interface Provincia {
+  sigla: string;
+  nome: string;
+  regione: string;
+  provinciaId: string;
+}
+
+export interface Utente {
+  username: string;
+  email: string;
+  nome: string;
+  cognome: string;
+  attivo: boolean;
+  authorities: Authority[];
+  avatar: string;
+  credentialsNonExpired: boolean;
+  utenteId: string;
+}
+
+export interface Authority {
+  authority: string;
+}
+
+export interface Pageable {
+  offset: number;
+  pageNumber: number;
+  pageSize: number;
+  paged: boolean;
+  sort: Sort;
+  unpaged: boolean;
+}
+
+export interface Sort {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
+}
+
+export interface Error {
+  message: string;
+  time: string;
 }
 
 export interface ErrorWithList {

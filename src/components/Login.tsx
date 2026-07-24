@@ -1,26 +1,26 @@
-import { useState, type SubmitEvent } from "react"
-import { Button, Card, Col, Container, Row, Form } from "react-bootstrap"
-import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router"
-import { setAccessToken } from "../redux/reducers/AuthSlice"
+import { useState, type SubmitEvent } from "react";
+import { Button, Card, Col, Container, Row, Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router";
+import { setAccessToken } from "../redux/reducers/AuthSlice";
 
 function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const apiUrl = import.meta.env.VITE_API_URL
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e: SubmitEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    console.log(email)
-    console.log(password)
+    console.log(email);
+    console.log(password);
 
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await fetch(apiUrl + "/auth/login", {
@@ -32,32 +32,30 @@ function Login() {
           email,
           password,
         }),
-      })
+      });
 
       if (!response.ok) {
-        let messaggioErrore = "Non riesco a leggere la risposta del server :("
+        let messaggioErrore = "Non riesco a leggere la risposta del server :(";
         try {
-          const errorData = await response.json()
-          if (errorData.message) messaggioErrore = errorData.message
+          const errorData = await response.json();
+          if (errorData.message) messaggioErrore = errorData.message;
         } catch {
           // il body non era JSON valido, resta il messaggio di default
         }
-        throw new Error(messaggioErrore)
+        throw new Error(messaggioErrore);
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
-      console.log("Login effettuato:", data)
+      dispatch(setAccessToken(data.accessToken));
 
-      dispatch(setAccessToken(data.accessToken))
-
-      navigate("/home")
+      navigate("/home");
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Errore nel login")
+      setError(error instanceof Error ? error.message : "Errore nel login");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
   return (
     <div className="py-5">
       <Container fluid={true} className="mt-5">
@@ -156,6 +154,6 @@ function Login() {
         </Row>
       </Container>
     </div>
-  )
+  );
 }
-export default Login
+export default Login;
