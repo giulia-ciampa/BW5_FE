@@ -12,6 +12,7 @@ function Home() {
             <div
               className="mb-3"
               style={{ color: "#ffc107", fontSize: "3.5rem" }}
+              onClick={() => navigate("/nuovo-cliente")}
             >
               <i className="bi bi-person"></i>
             </div>
