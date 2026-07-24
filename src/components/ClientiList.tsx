@@ -66,10 +66,10 @@ function ClientiList() {
           params.append("ragioneSociale", debouncedRagioneSociale.trim());
         }
         if (filtroFatturatoMin !== "") {
-          params.append("fatturatoMin", filtroFatturatoMin);
+          params.append("fatturatoMinimo", filtroFatturatoMin);
         }
         if (filtroFatturatoMax !== "") {
-          params.append("fatturatoMax", filtroFatturatoMax);
+          params.append("fatturatoMassimo", filtroFatturatoMax);
         }
         if (filtroDataInserimentoMin !== "") {
           params.append("dataInserimentoMin", filtroDataInserimentoMin);
