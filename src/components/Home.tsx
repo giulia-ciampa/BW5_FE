@@ -57,7 +57,10 @@ function Home() {
           </div>
         </Col>
         <Col md={4} style={{ cursor: "pointer" }}>
-          <div className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100">
+          <div
+            className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100"
+            onClick={() => navigate("/fatture")}
+          >
             <div
               className="mb-3"
               style={{ color: "#ffc107", fontSize: "3.5rem" }}
