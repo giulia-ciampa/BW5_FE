@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import { Badge, Card, Col, Container, Row } from "react-bootstrap"
-import type { Fattura } from "../interfaces/interfaces"
+import type { Error, Fattura } from "../interfaces/interfaces"
 
 function ListaFatture() {
   const [list, setList] = useState<Fattura[]>([])
+
+  const [error, setError] = useState<string | null>(null)
 
   const token = localStorage.getItem("accessToken")
 
@@ -17,6 +19,8 @@ function ListaFatture() {
         })
 
         if (!response.ok) {
+          const data: Error = await response.json()
+          setError(data.message)
           throw new Error("Impossibile recuperare la lista delle fatture")
         }
 
@@ -33,11 +37,9 @@ function ListaFatture() {
   return (
     <Container>
       <Row lg={1}>
-        {list.length === 0 ? (
+        {error ? (
           <Col>
-            <div className="alert alert-warning text-center">
-              Nessuna fattura trovata.
-            </div>
+            <div className="alert alert-warning text-center my-3">{error}</div>
           </Col>
         ) : (
           list.map((fattura, index) => (

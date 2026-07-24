@@ -53,7 +53,7 @@ function CreaFattura() {
 
     // Conversione "YYYY-MM-DD" in "DD/MM/YYYY"
     const [year, month, day] = formData.data.split("-")
-    const dataFormattata = `${year}-${month}-${day}`
+    const dataFormattata = `${day}/${month}/${year}`
 
     const payload: FatturaPayload = {
       data: dataFormattata,
