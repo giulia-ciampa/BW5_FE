@@ -9,6 +9,7 @@ import LandingPage from "./components/LandingPage";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ClientiList from "./components/ClientiList";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/home" element={<Home />} />
+                <Route path="/clienti" element={<ClientiList />} />
               </Route>
             </Routes>
           </main>
