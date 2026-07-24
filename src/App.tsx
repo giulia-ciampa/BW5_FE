@@ -10,7 +10,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreaFattura from "./components/CreaFattura";
-
+import FormCliente from "./components/FormCliente";
 function App() {
   return (
     <>
