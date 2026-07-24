@@ -47,8 +47,6 @@ function Login() {
 
       const data = await response.json();
 
-      console.log("Login effettuato:", data);
-
       dispatch(setAccessToken(data.accessToken));
 
       navigate("/home");
