@@ -18,6 +18,20 @@ export interface Page {
   totalPages: number;
 }
 
+export interface StatoFattura {
+  statoFatturaId: string;
+  stato: string;
+}
+
+export interface Fattura {
+  fatturaId: string;
+  data: string;
+  importo: number;
+  numero: number;
+  cliente: Cliente;
+  stato: StatoFattura;
+}
+
 export interface Cliente {
   ragioneSociale: string;
   partitaIva: string;

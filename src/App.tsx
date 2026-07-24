@@ -13,6 +13,8 @@ import ClientiList from "./components/ClientiList";
 
 import CreaFattura from "./components/CreaFattura";
 import FormCliente from "./components/FormCliente";
+import ListaFatture from "./components/ListaFatture";
+
 function App() {
   return (
     <>
@@ -27,6 +29,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/nuovo-cliente" element={<FormCliente />} />
               <Route element={<ProtectedRoute />}>
+                <Route path="/fatture" element={<ListaFatture />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/clienti" element={<ClientiList />} />
               </Route>
