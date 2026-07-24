@@ -1,0 +1,14 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../src/assets//premium_photo-1678743133487-d501f3b0696b.avif');
+    background-size: cover;       
+  background-position: center;     
+  background-repeat: no-repeat;    
+  background-attachment: fixed;
+}
