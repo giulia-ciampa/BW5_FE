@@ -20,15 +20,21 @@ function ClientiList() {
   const [page, setPage] = useState<number>(0);
   const [size, setSize] = useState<number>(10);
   const [totalPages, setTotalPages] = useState<number>(0);
+
   const [filtroRagioneSociale, setFiltroRagioneSociale] = useState<string>("");
+  const [debouncedRagioneSociale, setDebouncedRagioneSociale] =
+    useState<string>("");
   const [filtroDataInserimentoMin, setFiltroDataInserimentoMin] =
     useState<string>("");
   const [filtroDataInserimentoMax, setFiltroDataInserimentoMax] =
     useState<string>("");
   const [filtroFatturatoMin, setFiltroFatturatoMin] = useState<string>("");
   const [filtroFatturatoMax, setFiltroFatturatoMax] = useState<string>("");
-  // const [isFirst, setisFirst] = useState<boolean>(false);
-  // const [isLast, setisLast] = useState<boolean>(false);
+  const [filtroDataUltimoContattoMin, setFiltroDataUltimoContattoMin] =
+    useState<string>("");
+  const [filtroDataUltimoContattoMax, setFiltroDataUltimoContattoMax] =
+    useState<string>("");
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -36,6 +42,14 @@ function ClientiList() {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedRagioneSociale(filtroRagioneSociale);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [filtroRagioneSociale]);
 
   useEffect(() => {
     const fetchClienti = async (pageIndex: number, pageSize: number) => {
@@ -48,8 +62,8 @@ function ClientiList() {
           size: pageSize.toString(),
         });
 
-        if (filtroRagioneSociale.trim() !== "") {
-          params.append("ragioneSociale", filtroRagioneSociale.trim());
+        if (debouncedRagioneSociale.trim() !== "") {
+          params.append("ragioneSociale", debouncedRagioneSociale.trim());
         }
         if (filtroFatturatoMin !== "") {
           params.append("fatturatoMin", filtroFatturatoMin);
@@ -57,9 +71,19 @@ function ClientiList() {
         if (filtroFatturatoMax !== "") {
           params.append("fatturatoMax", filtroFatturatoMax);
         }
+        if (filtroDataInserimentoMin !== "") {
+          params.append("dataInserimentoMin", filtroDataInserimentoMin);
+        }
         if (filtroDataInserimentoMax !== "") {
           params.append("dataInserimentoMax", filtroDataInserimentoMax);
         }
+        if (filtroDataUltimoContattoMin !== "") {
+          params.append("dataUltimoContattoMin", filtroDataUltimoContattoMin);
+        }
+        if (filtroDataUltimoContattoMax !== "") {
+          params.append("dataUltimoContattoMax", filtroDataUltimoContattoMax);
+        }
+
         const response = await fetch(`${apiUrl}/clienti?${params.toString()}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -82,14 +106,23 @@ function ClientiList() {
     };
 
     fetchClienti(page, size);
-  }, [page, size, filtroRagioneSociale]);
+  }, [
+    page,
+    size,
+    debouncedRagioneSociale,
+    filtroDataInserimentoMin,
+    filtroDataInserimentoMax,
+    filtroFatturatoMin,
+    filtroFatturatoMax,
+    filtroDataUltimoContattoMin,
+    filtroDataUltimoContattoMax,
+  ]);
 
   return (
     <Container fluid className="py-3 border-top border-secondary">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
         <h2 className="text-white m-0">Elenco Clienti</h2>
 
-        {/* ⚙️ Selettore della Size (5 - 10 - 15 - 20) */}
         <div className="d-flex align-items-center gap-2 text-white">
           <label htmlFor="pageSizeSelect" className="text-nowrap small">
             Elementi per pagina:
@@ -98,7 +131,10 @@ function ClientiList() {
             id="pageSizeSelect"
             size="sm"
             value={size}
-            onChange={(e) => setSize(Number(e.target.value))}
+            onChange={(e) => {
+              setSize(Number(e.target.value));
+              setPage(0);
+            }}
             className="bg-dark text-white border-secondary"
             style={{ width: "80px" }}
           >
@@ -110,10 +146,8 @@ function ClientiList() {
         </div>
       </div>
 
-      {/* 🔍 Sezione Filtri di Ricerca */}
       <div className="p-3 mb-4 rounded bg-dark bg-opacity-75 border border-secondary text-white">
-        <Row className="g-3 align-items-center justify-content-center">
-          {/* Filtro per Nome/Ragione Sociale */}
+        <Row className="g-3 align-items-center">
           <Col xs={12} md={6} lg={4}>
             <Form.Group controlId="filterNome">
               <Form.Label className="small mb-1">
@@ -137,8 +171,7 @@ function ClientiList() {
             </Form.Group>
           </Col>
 
-          {/* Filtro Fatturato Annuale Minimo */}
-          <Col xs={12} sm={6} md={3}>
+          <Col xs={12} sm={6} md={3} lg={2}>
             <Form.Group controlId="filterFatturatoMin">
               <Form.Label className="small mb-1">Fatturato Min (€)</Form.Label>
               <Form.Control
@@ -147,7 +180,7 @@ function ClientiList() {
                 min="0"
                 step="1000"
                 placeholder="Es. 10000"
-                value={filtroFatturatoMin} // useState<string>("") oppure useState<number | "">("")
+                value={filtroFatturatoMin}
                 onChange={(e) => {
                   setFiltroFatturatoMin(e.target.value);
                   setPage(0);
@@ -157,8 +190,7 @@ function ClientiList() {
             </Form.Group>
           </Col>
 
-          {/* Filtro Fatturato Annuale Massimo */}
-          <Col xs={12} sm={6} md={3}>
+          <Col xs={12} sm={6} md={3} lg={2}>
             <Form.Group controlId="filterFatturatoMax">
               <Form.Label className="small mb-1">Fatturato Max (€)</Form.Label>
               <Form.Control
@@ -177,10 +209,10 @@ function ClientiList() {
             </Form.Group>
           </Col>
 
-          <Col xs={12} md={6} lg={3}>
+          <Col xs={12} sm={6} md={3} lg={2}>
             <Form.Group controlId="filterDataInserimentoMin">
               <Form.Label className="small mb-1">
-                Data di Inserimento Min
+                Data Inserimento Min
               </Form.Label>
               <Form.Control
                 type="date"
@@ -195,28 +227,10 @@ function ClientiList() {
             </Form.Group>
           </Col>
 
-          <Col xs={12} md={6} lg={3}>
-            <Form.Group controlId="filterDataInserimentoMin">
-              <Form.Label className="small mb-1">
-                Data di Inserimento Min
-              </Form.Label>
-              <Form.Control
-                type="date"
-                size="sm"
-                value={filtroDataInserimentoMin}
-                onChange={(e) => {
-                  setFiltroDataInserimentoMin(e.target.value);
-                  setPage(0);
-                }}
-                className="bg-dark text-white border-secondary"
-              />
-            </Form.Group>
-          </Col>
-
-          <Col xs={12} md={6} lg={3}>
+          <Col xs={12} sm={6} md={3} lg={2}>
             <Form.Group controlId="filterDataInserimentoMax">
               <Form.Label className="small mb-1">
-                Data di Inserimento Max
+                Data Inserimento Max
               </Form.Label>
               <Form.Control
                 type="date"
@@ -230,22 +244,54 @@ function ClientiList() {
               />
             </Form.Group>
           </Col>
+
+          <Col xs={12} sm={6} md={3} lg={2}>
+            <Form.Group controlId="filterDataUltimoContattoMin">
+              <Form.Label className="small mb-1">
+                Ultimo Contatto Min
+              </Form.Label>
+              <Form.Control
+                type="date"
+                size="sm"
+                value={filtroDataUltimoContattoMin}
+                onChange={(e) => {
+                  setFiltroDataUltimoContattoMin(e.target.value);
+                  setPage(0);
+                }}
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} sm={6} md={3} lg={2}>
+            <Form.Group controlId="filterDataUltimoContattoMax">
+              <Form.Label className="small mb-1">
+                Ultimo Contatto Max
+              </Form.Label>
+              <Form.Control
+                type="date"
+                size="sm"
+                value={filtroDataUltimoContattoMax}
+                onChange={(e) => {
+                  setFiltroDataUltimoContattoMax(e.target.value);
+                  setPage(0);
+                }}
+                className="bg-dark text-white border-secondary"
+              />
+            </Form.Group>
+          </Col>
         </Row>
       </div>
 
-      {/* Gestione Errori */}
       {error && <Alert variant="danger">{error}</Alert>}
 
-      {/* Loader durante il caricamento */}
       {loading ? (
         <div className="text-center py-5">
           <Spinner animation="border" variant="primary" />
         </div>
       ) : (
         <>
-          {/* Griglia delle Card */}
           <Row className="g-4">
-            {/* ➕ Card "Crea nuovo cliente" */}
             <Col xs={12} sm={6} md={4} lg={3}>
               <div
                 className="p-4 rounded shadow bg-dark bg-opacity-75 text-white h-100 text-center d-flex flex-column justify-content-center align-items-center border border-secondary"
@@ -264,7 +310,6 @@ function ClientiList() {
               </div>
             </Col>
 
-            {/* 👤 Card dinamiche */}
             {clienti?.length > 0 ? (
               clienti.map((cliente) => (
                 <Col key={cliente.idCliente} xs={12} sm={6} md={4} lg={3}>
@@ -311,7 +356,6 @@ function ClientiList() {
             )}
           </Row>
 
-          {/* Paginazione */}
           {totalPages > 1 && (
             <div className="d-flex justify-content-center mt-5">
               <Pagination className="pagination-dark">
